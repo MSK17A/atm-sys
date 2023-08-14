@@ -1,9 +1,3 @@
-objects = src/main.o
+main: src/main.o
 
-atm : $(objects)
-	cc -o atm $(objects)
-
-main.o : src/header.h
-
-clean :
-	rm -f $(objects)
+cc src/blah.o -o blah # Runs third

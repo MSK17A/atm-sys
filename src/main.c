@@ -2,13 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-void initMenu();
+void mainMenu();
 
 int main()
 {
     //struct User u;
-    
-    initMenu();
+    mainMenu();
     //mainMenu(u);
     return 0;
 }
