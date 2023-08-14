@@ -1,2 +1,7 @@
-main:
-	cc src/main.c -o main
+objects = src/main.o
+
+main : $(objects)
+	cc -o main $(objects)
+
+clean :
+	rm -f $(objects)
