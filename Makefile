@@ -1,3 +1,2 @@
-main: src/main.o
-
-cc src/blah.o -o blah # Runs third
+main:
+	cc src/main.c -o main
