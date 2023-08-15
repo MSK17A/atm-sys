@@ -5,3 +5,4 @@ main : $(objects)
 
 clean :
 	rm -f $(objects)
+	rm -f main
