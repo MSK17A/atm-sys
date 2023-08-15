@@ -1,7 +1,7 @@
 objects = src/main.o
 
 main : $(objects)
-	cc -o main $(objects) -lsqlite3
+	cc -o main $(objects) -l sqlite3
 
 clean :
 	rm -f $(objects)
