@@ -38,23 +38,18 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   }
 }
 
-void add_user(sqlite3 *db, char *user_name, char *user_pass,
-              unsigned int account_id) {
+void add_user(sqlite3 *db, char *user_name, char *user_pass) {
   char *user, *pass, *acc_id, *Values;
 
   user = (char *)malloc(strlen(user_name) + 3); // +3 for surrounding ''
   pass = (char *)malloc(strlen(user_pass) + 3); // +3 for surrounding ''
-  acc_id = (char *)malloc(12); // Maximum number of digits for an unsigned int +
-                               // 3 for surrounding ''
-
   Values = (char *)malloc(strlen(user_name) + strlen(user_pass) + 12 + 5 + 9);
   sprintf(user, "%s%s%s", "'", user_name, "'"); // Surround with ' '
   sprintf(pass, "%s%s%s", "'", user_pass, "'"); // Surround with ' '
-  sprintf(acc_id, "%u", account_id);            // Surround with ' '
-  sprintf(Values, "%s%s%s%s%s%s%s", "(", user, ",", pass, ",", acc_id, ")");
+  sprintf(Values, "%s%s%s%s%s", "(", user, ",", pass, ")");
   fprintf(stdout, "%s", Values);
 
-  sql_insert(db, "Users", "(userName,passWord,accountId)", Values);
+  sql_insert(db, "Users", "(userName,passWord)", Values);
 }
 
 void add_account(sqlite3 *db, char *user_name, char *user_pass,

@@ -4,7 +4,7 @@
 typedef struct User User;
 
 struct User {
-  char *userName, *userPass;
+  char userName[30], userPass[30];
   int accountId;
 };
 

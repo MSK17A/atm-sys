@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "sql_operations.h"
+#include "addUserMenu.h"
 
 void initMenu(sqlite3 *db)
 {
@@ -34,7 +35,8 @@ void initMenu(sqlite3 *db)
         case 2:
             // student TODO : add your **Registration** function
             // here
-            add_user(db, "Users", "rada", 665);
+            addUserMenu(db);
+            //add_user(db, "Users", "rada", 665);
             r = 1;
             break;
         case 3:
