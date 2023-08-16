@@ -1,3 +1,9 @@
-#include "initMenu.c"
+#ifndef initMenu_h
+#define initMenu_h
 
-void initMenu();
+#include "initMenu.c"
+#include "user_struct.h"
+
+void initMenu(sqlite3 *db);
+
+#endif

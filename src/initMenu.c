@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "sql_operations.h"
 
-void initMenu()
+void initMenu(sqlite3 *db)
 {
     int r = 0;
     int option;
@@ -33,6 +34,7 @@ void initMenu()
         case 2:
             // student TODO : add your **Registration** function
             // here
+            add_user(db, "Users", "rada", 665);
             r = 1;
             break;
         case 3:

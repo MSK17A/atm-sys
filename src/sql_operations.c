@@ -1,5 +1,6 @@
 #include "sqlite/sqlite3.h"
 #include "string.h"
+#include "user_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,4 +55,13 @@ void add_user(sqlite3 *db, char *user_name, char *user_pass,
   fprintf(stdout, "%s", Values);
 
   sql_insert(db, "Users", "(userName,passWord,accountId)", Values);
+}
+
+void add_account(sqlite3 *db, char *user_name, char *user_pass,
+                 unsigned int account_id) {
+
+                 }
+
+void get_user(User user) {
+
 }
