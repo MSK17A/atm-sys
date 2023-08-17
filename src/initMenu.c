@@ -1,11 +1,12 @@
-#include "addUserMenu.h"
-#include "loginMenu.h"
-#include "sql_operations.h"
+#include "../headers/addUserMenu.h"
+#include "../headers/loginMenu.h"
+#include "../headers/sql_operations.h"
+#include "../headers/user_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void initMenu(sqlite3 *db) {
+void initMenu(sqlite3 *db, User *user) {
   int r = 0;
   int option;
   system("clear");
@@ -18,27 +19,13 @@ void initMenu(sqlite3 *db) {
     scanf("%d", &option);
     switch (option) {
     case 1:
-      /*loginMenu(u->name, u->password);
-      if (strcmp(u->password, getPassword(*u)) == 0)
-      {
-          printf("\n\nPassword Match!");
-      }
-      else
-      {
-          printf("\nWrong password!! or User Name\n");
-          exit(1);
-      }
-      r = 1;
-      break;
-      */
-		loginMenu(db);
+      loginMenu(db, user);
       exit(1);
       break;
     case 2:
       // student TODO : add your **Registration** function
       // here
-      addUserMenu(db);
-      // add_user(db, "Users", "rada", 665);
+      addUserMenu(db, user);
       r = 1;
       break;
     case 3:
