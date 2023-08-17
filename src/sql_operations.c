@@ -49,14 +49,30 @@ void add_user(sqlite3 *db, char *user_name, char *user_pass) {
   sprintf(Values, "%s%s%s%s%s", "(", user, ",", pass, ")");
   fprintf(stdout, "%s", Values);
 
-  sql_insert(db, "Users", "(userName,passWord)", Values);
+  sql_insert(db, "Users", "(userName,userPass)", Values);
 }
 
 void add_account(sqlite3 *db, char *user_name, char *user_pass,
-                 unsigned int account_id) {
+                 unsigned int account_id) {}
 
-                 }
+void get_user(sqlite3 *db, User user) {
+  char *zErrMsg = 0;
+  int rc;
+  char *sql;
+  char *oper = "INSERT INTO ";
+  const char* data = "Callback function called";
 
-void get_user(User user) {
+  /* Create SQL statement */
+  sql = "SELECT * from Users";
 
+  /* Execute SQL statement */
+  rc = sqlite3_exec(db, sql, callback, (void *)data, &zErrMsg);
+
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+  } else {
+    fprintf(stdout, "Operation done successfully\n");
+  }
+  sqlite3_close(db);
 }

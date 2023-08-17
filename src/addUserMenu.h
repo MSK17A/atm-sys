@@ -1,5 +1,5 @@
-#ifndef addUserMeny_h
-#define addUserMeny_h
+#ifndef addUserMenu_h
+#define addUserMenu_h
 
 #include "addUserMenu.c"
 
