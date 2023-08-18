@@ -20,12 +20,13 @@ typedef struct {
   char *userPass;
 } FoundUser;
 
-/* This callback is used to retrive that data from the database and store them
+/* This callback is used to retrive the data from the database and store them
  * inside a struct */
 static int get_id_callback(void *data, int argc, char **argv,
                            char **azColName) {
   FoundUser *user = (FoundUser *)data;
-  printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
+  printf("%s \n", user->userName);
+  // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   user->user_id = atoi(argv[0]);
 
   strncpy(user->userName, argv[0], sizeof(user->userName));
@@ -34,9 +35,10 @@ static int get_id_callback(void *data, int argc, char **argv,
 
 static int get_pass_callback(void *data, int argc, char **argv,
                              char **azColName) {
+  printf("1");
   FoundUser *user = (FoundUser *)data;
-  printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
-  strcpy(user->userPass, argv[0]);
+  // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
+  asprintf(&user->userPass, "%s", argv[0]);
 
   strncpy(user->userName, argv[0], sizeof(user->userName));
   return 0;
@@ -86,7 +88,6 @@ int get_user_id(sqlite3 *db, User *user) {
   char *zErrMsg = 0;
   int rc;
   char *sql = NULL;
-  char *oper = "INSERT INTO ";
   const char *data = "Callback function called";
 
   /* Create SQL statement */
@@ -105,7 +106,6 @@ int get_user_id(sqlite3 *db, User *user) {
   } else {
     fprintf(stdout, "Operation done successfully\n");
   }
-  sqlite3_close(db);
 
   /* If user wasn't found */
   if (fUser.user_id == -1) {
@@ -129,12 +129,10 @@ char *get_user_pass(sqlite3 *db, User *user) {
            "SELECT userPass FROM Users WHERE userName = ", "'", user->userName,
            "'", ";");
 
-  strcpy(user->userName, "MoMo");
   /* Execute SQL statement */
   FoundUser fUser;       // Found user struct
   fUser.userPass = "-1"; // Init value for userPass
   rc = sqlite3_exec(db, sql, get_pass_callback, &fUser, &zErrMsg);
-  fprintf(stdout, "%s%s%s", "Password: ", fUser.userPass, "\n");
 
   if (rc != SQLITE_OK) {
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -142,8 +140,6 @@ char *get_user_pass(sqlite3 *db, User *user) {
   } else {
     fprintf(stdout, "Operation done successfully\n");
   }
-  sqlite3_close(db);
 
-  fprintf(stdout, "FOUND!!!");
   return fUser.userPass;
 }

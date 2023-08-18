@@ -14,10 +14,21 @@ void loginMenu(sqlite3 *db, User *user) {
   if (get_user_id(db, user) == -1)
     exit(1);
 
-  get_user_pass(db, user);
+  const char *userPassword = get_user_pass(db, user);
   printf("\n\t\tEnter password :\n");
   scanf("%s", user_input);
-
-  mainMenu(db, user);
   strcpy(user->userPass, user_input);
+
+  if (strcmp(userPassword, user->userPass) == 0) {
+    mainMenu(db, user);
+  } else {
+    printf("Wrong Pass\n");
+    printf("Retry? (Y/N): ");
+    scanf("%s", user_input);
+    if (strcmp(user_input, "Y") == 0) {
+      loginMenu(db, user);
+    } else {
+      exit(1);
+    }
+  }
 }
