@@ -7,8 +7,8 @@ A simple ATM management app written in C.
 - Open accounts
 and more.
 ## How to use
-1- clone the repo.
-2- `cd atm-sys`
-3- run `bash build`
-4- run `./main`
-5- Explore
+1. clone the repo.
+2. `cd atm-sys`
+3. run `bash build`
+4. run `./main`
+5. Explore
