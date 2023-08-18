@@ -25,7 +25,6 @@ typedef struct {
 static int get_id_callback(void *data, int argc, char **argv,
                            char **azColName) {
   FoundUser *user = (FoundUser *)data;
-  printf("%s \n", user->userName);
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   user->user_id = atoi(argv[0]);
 
@@ -35,7 +34,6 @@ static int get_id_callback(void *data, int argc, char **argv,
 
 static int get_pass_callback(void *data, int argc, char **argv,
                              char **azColName) {
-  printf("1");
   FoundUser *user = (FoundUser *)data;
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   asprintf(&user->userPass, "%s", argv[0]);
@@ -72,7 +70,6 @@ void add_user(sqlite3 *db, char *user_name, char *user_pass) {
   asprintf(&user, "%s%s%s", "'", user_name, "'"); // Surround with ' '
   asprintf(&pass, "%s%s%s", "'", user_pass, "'"); // Surround with ' '
   asprintf(&Values, "%s%s%s%s%s", "(", user, ",", pass, ")");
-  fprintf(stdout, "%s", Values);
 
   sql_insert(db, "Users", "(userName,userPass)", Values);
   free(user);
@@ -103,16 +100,13 @@ int get_user_id(sqlite3 *db, User *user) {
   if (rc != SQLITE_OK) {
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
-  } else {
-    fprintf(stdout, "Operation done successfully\n");
   }
 
   /* If user wasn't found */
   if (fUser.user_id == -1) {
-    fprintf(stdout, "User not found!");
+    fprintf(stdout, "User not found!\n");
     return -1;
   }
-  fprintf(stdout, "FOUND!!!\n");
   return fUser.user_id;
 }
 
@@ -137,8 +131,6 @@ char *get_user_pass(sqlite3 *db, User *user) {
   if (rc != SQLITE_OK) {
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
-  } else {
-    fprintf(stdout, "Operation done successfully\n");
   }
 
   return fUser.userPass;

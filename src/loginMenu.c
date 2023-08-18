@@ -39,7 +39,7 @@ int loginMenu(sqlite3 *db, User *user) {
     printf("Retry? (Y/N): ");
     scanf("%s", user_input);
     if (strcmp(user_input, "Y") == 0) {
-      loginMenu(db, user);
+      return loginMenu(db, user);
     } else {
       return 0;
     }

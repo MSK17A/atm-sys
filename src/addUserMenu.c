@@ -19,6 +19,6 @@ void addUserMenu(sqlite3 *db, User *user) {
   strcpy(user->userPass, user_input);
 
   add_user(db, user->userName, user->userPass);
-  printf("%s%s%s%s", "username: ", user->userName,
-         " password: ", user->userPass);
+  /*printf("%s%s%s%s", "username: ", user->userName,
+         " password: ", user->userPass);*/
 }
