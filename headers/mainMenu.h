@@ -2,8 +2,7 @@
 #define mainMenu_h
 
 #include "../src/mainMenu.c"
-#include "user_struct.h"
 
-void mainMenu();
+void mainMenu(sqlite3 *db, User *user);
 
 #endif

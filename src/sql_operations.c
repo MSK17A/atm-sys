@@ -1,6 +1,6 @@
+#include "../headers/user_struct.h"
 #include "sqlite/sqlite3.h"
 #include "string.h"
-#include "../headers/user_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,20 +17,28 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
 typedef struct {
   int user_id;
   char userName[45];
+  char *userPass;
 } FoundUser;
 
 /* This callback is used to retrive that data from the database and store them
  * inside a struct */
-static int get_callback(void *data, int argc, char **argv, char **azColName) {
-  printf("1\n");
+static int get_id_callback(void *data, int argc, char **argv,
+                           char **azColName) {
   FoundUser *user = (FoundUser *)data;
-  printf("2\n");
-  printf("argc: %d, %s", argc, argv[0]);
+  printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   user->user_id = atoi(argv[0]);
-  printf("3\n");
 
   strncpy(user->userName, argv[0], sizeof(user->userName));
-  printf("4\n");
+  return 0;
+}
+
+static int get_pass_callback(void *data, int argc, char **argv,
+                             char **azColName) {
+  FoundUser *user = (FoundUser *)data;
+  printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
+  strcpy(user->userPass, argv[0]);
+
+  strncpy(user->userName, argv[0], sizeof(user->userName));
   return 0;
 }
 
@@ -74,7 +82,7 @@ void add_account(sqlite3 *db, char *user_name, char *user_pass,
                  unsigned int account_id) {}
 
 /* This function will search for user and returns its ID */
-int get_user_id(sqlite3 *db, User user) {
+int get_user_id(sqlite3 *db, User *user) {
   char *zErrMsg = 0;
   int rc;
   char *sql = NULL;
@@ -83,13 +91,13 @@ int get_user_id(sqlite3 *db, User user) {
 
   /* Create SQL statement */
   asprintf(&sql, "%s%s%s%s%s",
-           "SELECT user_id FROM Users WHERE userName = ", "'", user.userName,
+           "SELECT user_id FROM Users WHERE userName = ", "'", user->userName,
            "'", ";");
 
   /* Execute SQL statement */
   FoundUser fUser;    // Found user struct
   fUser.user_id = -1; // Init value for user_id
-  rc = sqlite3_exec(db, sql, get_callback, &fUser, &zErrMsg);
+  rc = sqlite3_exec(db, sql, get_id_callback, &fUser, &zErrMsg);
 
   if (rc != SQLITE_OK) {
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -104,6 +112,38 @@ int get_user_id(sqlite3 *db, User user) {
     fprintf(stdout, "User not found!");
     return -1;
   }
-  fprintf(stdout, "FOUND!!!");
+  fprintf(stdout, "FOUND!!!\n");
   return fUser.user_id;
+}
+
+/* Returns user pass */
+char *get_user_pass(sqlite3 *db, User *user) {
+  char *zErrMsg = 0;
+  int rc;
+  char *sql = NULL;
+  char *oper = "INSERT INTO ";
+  const char *data = "Callback function called";
+
+  /* Create SQL statement */
+  asprintf(&sql, "%s%s%s%s%s",
+           "SELECT userPass FROM Users WHERE userName = ", "'", user->userName,
+           "'", ";");
+
+  strcpy(user->userName, "MoMo");
+  /* Execute SQL statement */
+  FoundUser fUser;       // Found user struct
+  fUser.userPass = "-1"; // Init value for userPass
+  rc = sqlite3_exec(db, sql, get_pass_callback, &fUser, &zErrMsg);
+  fprintf(stdout, "%s%s%s", "Password: ", fUser.userPass, "\n");
+
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+  } else {
+    fprintf(stdout, "Operation done successfully\n");
+  }
+  sqlite3_close(db);
+
+  fprintf(stdout, "FOUND!!!");
+  return fUser.userPass;
 }
