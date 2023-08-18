@@ -3,5 +3,5 @@
 
 #include "../src/loginMenu.c"
 
-void loginMenu(sqlite3 *db, User *user);
+int loginMenu(sqlite3 *db, User *user);
 #endif

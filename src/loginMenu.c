@@ -3,7 +3,9 @@
 #include "../headers/user_struct.h"
 #include "sqlite/sqlite3.h"
 
-void loginMenu(sqlite3 *db, User *user) {
+/* Returns 1 when user logged in successfully, or 0 when use enters wrong
+ * credentials */
+int loginMenu(sqlite3 *db, User *user) {
   char user_input[30];
 
   system("clear");
@@ -26,7 +28,8 @@ void loginMenu(sqlite3 *db, User *user) {
   /* Compares the password in the database with the provided password, if it is
    * match then enter the mainMenu as a user */
   if (strcmp(userPassword, user->userPass) == 0) {
-    mainMenu(db, user);
+    // mainMenu(db, user);
+    return 1;
   } else {
     /* Or else ask to retry or exit */
     printf("Wrong Pass\n");
@@ -35,7 +38,8 @@ void loginMenu(sqlite3 *db, User *user) {
     if (strcmp(user_input, "Y") == 0) {
       loginMenu(db, user);
     } else {
-      exit(1);
+      return 0;
     }
   }
+  return 0;
 }

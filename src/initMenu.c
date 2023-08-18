@@ -19,8 +19,12 @@ void initMenu(sqlite3 *db, User *user) {
     scanf("%d", &option);
     switch (option) {
     case 1:
-      loginMenu(db, user);
-      exit(1);
+      /* If user logged in successfully let him enters mainMenu */
+      if (loginMenu(db, user) == 1) {
+        mainMenu(db, user);
+      } else {
+        exit(1);
+      }
       break;
     case 2:
       // student TODO : add your **Registration** function
