@@ -47,10 +47,9 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   char *zErrMsg = 0;
   int rc;
   char *sql;
-  char *oper = "INSERT INTO ";
 
   /* Create SQL statement */
-  sprintf(sql, "%s%s%s%s%s%s%s%s", oper, Table_name, " ", Columnes_names, " ",
+  sprintf(sql, "%s%s%s%s%s%s%s%s", "INSERT INTO ", Table_name, " ", Columnes_names, " ",
           "VALUES", Values, ";");
 
   /* Execute SQL statement */
