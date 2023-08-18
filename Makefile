@@ -8,11 +8,11 @@ EXECUTABLE = main
 
 # Compile sources to objects
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	cc -Iheaders -c $< -o $@
+	cc -I headers -c $< -o $@
 
 # Compile main.c
 $(EXECUTABLE): $(OBJECTS) main.c
-	cc -Iheaders $^ -o $@ $(LDFLAGS)
+	cc -I headers $^ -o $@ $(LDFLAGS)
 
 .PHONY: clean
 
