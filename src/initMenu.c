@@ -2,6 +2,7 @@
 #include "../headers/loginMenu.h"
 #include "../headers/sql_operations.h"
 #include "../headers/user_struct.h"
+#include "../headers/mainMenu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

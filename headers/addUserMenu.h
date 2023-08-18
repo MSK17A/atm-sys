@@ -1,7 +1,7 @@
-#ifndef addUserMenu_h
-#define addUserMenu_h
+#ifndef ADDUSERMENU_H
+#define ADDUSERMENU_H
 
-#include "../src/addUserMenu.c"
+#include "../src/sqlite/sqlite3.h"
 #include "user_struct.h"
 
 void addUserMenu(sqlite3 *db, User *user);

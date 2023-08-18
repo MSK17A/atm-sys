@@ -1,7 +1,8 @@
-#include "../headers/initMenu.h"
-#include "../headers/mainMenu.h"
-#include "../headers/user_struct.h"
-#include "../headers/sql_operations.h"
+#include "headers/initMenu.h"
+#include "headers/mainMenu.h"
+#include "headers/sql_operations.h"
+#include "headers/user_struct.h"
+#include <stdio.h>
 
 int main(int argc, char *argv[]) {
   sqlite3 *db;

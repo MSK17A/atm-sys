@@ -1,3 +1,4 @@
+#include "../headers/addUserMenu.h"
 #include "../headers/sql_operations.h"
 #include "../headers/user_struct.h"
 #include <stdio.h>

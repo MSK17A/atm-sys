@@ -1,0 +1,8 @@
+objects = src/main.o src/addUserMenu.o
+
+main : $(objects)
+	cc -o main $(objects) -l sqlite3 -Iheaders
+
+clean :
+	rm -f $(objects)
+	rm -f main
