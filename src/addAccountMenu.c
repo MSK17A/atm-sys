@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void addAccountMenu(__unused sqlite3 *db, __unused User *user) {
+void addAccountMenu(__unused sqlite3 *db, User *user) {
   char Name[30];
   char Account_type[7];
   char Country[3];
@@ -31,4 +31,5 @@ void addAccountMenu(__unused sqlite3 *db, __unused User *user) {
 
   char *data[] = {Name, Account_type, Country, Phone};
   selected_record_construction(user, data, Balance);
+  add_account(db, user);
 }

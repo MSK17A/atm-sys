@@ -51,8 +51,8 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   char *sql = NULL;
 
   /* Create SQL statement */
-  sprintf(sql, "%s%s%s%s%s%s%s%s", "INSERT INTO ", Table_name, " ",
-          Columnes_names, " ", "VALUES", Values, ";");
+  asprintf(&sql, "%s%s%s%s%s%s%s%s", "INSERT INTO ", Table_name, " ",
+           Columnes_names, " ", "VALUES", Values, ";");
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -63,6 +63,7 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   } else {
     fprintf(stdout, "Records created successfully\n");
   }
+  free(sql);
 }
 
 void add_user(sqlite3 *db, User *user) {
@@ -76,16 +77,20 @@ void add_user(sqlite3 *db, User *user) {
   free(Values);
 }
 
-void add_account(sqlite3 *db, User *user) {
-  char *Values;
+void add_account(__unused sqlite3 *db, User *user) {
+  __unused char *Values;
+  printf("Acc name:  %s Balance: %lf\n", user->records->name,
+         user->records->balance);
 
-  asprintf(&Values, "%s%d%s%s%s%s%s%s%s%s%s%f%s", "('", user->records->user_id,
-           "','", user->records->acc_type, "','", user->records->country, "','",
+  asprintf(&Values, "%s%d%s%s%s%s%s%s%s%s%s%lf%s", "(", user->records->user_id,
+           ",'", user->records->acc_type, "','", user->records->country, "','",
            user->records->name, "','", user->records->phone, "',",
            user->records->balance, ")");
 
-  sql_insert(db, "Records", "(user_id, acc_type, country, name, phone)",
+  printf("%s", Values);
+  sql_insert(db, "Records", "(user_id,acc_type,country,name,phone,balance)",
              Values);
+  free(Values);
 }
 
 /* This function will search for user and returns its ID */
