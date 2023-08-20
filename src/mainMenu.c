@@ -23,11 +23,11 @@ void mainMenu(sqlite3 *db, User *user) {
   switch (option) {
   case 1:
     // createNewAcc(u);
+    addAccountMenu(db, user);
     break;
   case 2:
     // student TODO : add your **Update account information** function
     // here
-    addAccountMenu(db, user);
     break;
   case 3:
     // student TODO : add your **Check the details of existing accounts**

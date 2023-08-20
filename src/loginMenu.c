@@ -9,24 +9,24 @@
 /* Returns 1 when user logged in successfully, or 0 when use enters wrong
  * credentials */
 int loginMenu(sqlite3 *db, User *user) {
-  char user_input[30];
+  char User_Name[30];
+  char Password[30];
+  char user_input[2];
 
   system("clear");
   printf("\n\n\t\t======= ATM =======\n");
   printf("\n\t\tUser name :\n");
-  scanf("%s", user_input);
+  scanf("%s", User_Name);
 
-  /* Stores the username inside user struct */
-  strcpy(user->userName, user_input);
+  printf("\n\t\tEnter password :\n");
+  scanf("%s", Password);
+
+  logged_in_user_construction(user, User_Name, Password);
+  const char *userPassword = get_user_pass(db, user);
+
   /* Check if the id is found or exit the program if it wasn't found */
   if (get_user_id(db, user) == -1)
     exit(1);
-
-  const char *userPassword = get_user_pass(db, user);
-  printf("\n\t\tEnter password :\n");
-  scanf("%s", user_input);
-  /* Stores the password inside user struct */
-  strcpy(user->userPass, user_input);
 
   /* Compares the password in the database with the provided password, if it is
    * match then enter the mainMenu as a user */

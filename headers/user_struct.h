@@ -5,15 +5,16 @@ typedef struct {
   int account_id;
   double balance;
   int user_id;
-  char *acc_type, *country, *name, *phone;
+  char acc_type[7], country[3], name[30], phone[9];
 } Record;
 
 typedef struct {
   char userName[30], userPass[30];
   int userID;
-  Record records[];
+  Record *records;
 } User;
 
-void user_construction(User *user);
+void logged_in_user_construction(User *user, char *User_name, char *Password);
+void selected_record_construction(User *user, char *data[], double balance);
 
 #endif

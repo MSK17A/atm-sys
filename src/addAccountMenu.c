@@ -5,28 +5,30 @@
 #include <stdlib.h>
 #include <string.h>
 
-void addAccountMenu(sqlite3 *db, User *user) {
-  char user_input[30];
-  double u2;
+void addAccountMenu(__unused sqlite3 *db, __unused User *user) {
+  char Name[30];
+  char Account_type[7];
+  char Country[3];
+  char Phone[9];
+  double Balance;
 
   system("clear");
   printf("\n\n\t\t======= Account Registeration =======\n");
   printf("\n\t\tName :\n");
-  scanf("%s", user_input);
-  strncpy(user->records->name, user_input, 7);
-  printf("\n\t\tAccount type: \n");
-  scanf("%s", user_input);
-  strncpy(user->records->acc_type, user_input, 7);
-  printf("\n\t\tCountry: \n");
-  scanf("%s", user_input);
-  strncpy(user->records->country, user_input, 3);
-  printf("\n\t\tPhone: \n");
-  scanf("%s", user_input);
-  strncpy(user->records->phone, user_input, 9);
-  printf("\n\t\tBalance: \n");
-  scanf("%lf", &u2);
-  user->records->balance = u2;
+  scanf("%s", Name);
 
-  user->records->user_id = user->userID;
-  add_account(db, user);
+  printf("\n\t\tAccount type: \n");
+  scanf("%s", Account_type);
+
+  printf("\n\t\tCountry: \n");
+  scanf("%s", Country);
+
+  printf("\n\t\tPhone: \n");
+  scanf("%s", Phone);
+
+  printf("\n\t\tBalance: \n");
+  scanf("%lf", &Balance);
+
+  char *data[] = {Name, Account_type, Country, Phone};
+  selected_record_construction(user, data, Balance);
 }
