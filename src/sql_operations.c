@@ -1,3 +1,4 @@
+#include "../headers/sql_operations.h"
 #include "../headers/user_struct.h"
 #include "sqlite/sqlite3.h"
 #include "string.h"
@@ -5,7 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+static int callback(__unused void *NotUsed, int argc, char **argv,
+                    char **azColName) {
   int i;
   for (i = 0; i < argc; i++) {
     printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
@@ -22,8 +24,8 @@ typedef struct {
 
 /* This callback is used to retrive the data from the database and store them
  * inside a struct */
-static int get_id_callback(void *data, int argc, char **argv,
-                           char **azColName) {
+static int get_id_callback(void *data, __unused int argc, char **argv,
+                           __unused char **azColName) {
   FoundUser *user = (FoundUser *)data;
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   user->user_id = atoi(argv[0]);
@@ -32,8 +34,8 @@ static int get_id_callback(void *data, int argc, char **argv,
   return 0;
 }
 
-static int get_pass_callback(void *data, int argc, char **argv,
-                             char **azColName) {
+static int get_pass_callback(void *data, __unused int argc, char **argv,
+                             __unused char **azColName) {
   FoundUser *user = (FoundUser *)data;
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   asprintf(&user->userPass, "%s", argv[0]);
@@ -46,11 +48,11 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
                 char *Values) {
   char *zErrMsg = 0;
   int rc;
-  char *sql;
+  char *sql = NULL;
 
   /* Create SQL statement */
-  sprintf(sql, "%s%s%s%s%s%s%s%s", "INSERT INTO ", Table_name, " ", Columnes_names, " ",
-          "VALUES", Values, ";");
+  sprintf(sql, "%s%s%s%s%s%s%s%s", "INSERT INTO ", Table_name, " ",
+          Columnes_names, " ", "VALUES", Values, ";");
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -63,28 +65,35 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   }
 }
 
-void add_user(sqlite3 *db, char *user_name, char *user_pass) {
-  char *user, *pass, *acc_id, *Values;
+void add_user(sqlite3 *db, User *user) {
+  char *Values;
 
-  asprintf(&user, "%s%s%s", "'", user_name, "'"); // Surround with ' '
-  asprintf(&pass, "%s%s%s", "'", user_pass, "'"); // Surround with ' '
-  asprintf(&Values, "%s%s%s%s%s", "(", user, ",", pass, ")");
+  asprintf(&Values, "%s%s%s%s%s", "('", user->userName, "','", user->userPass,
+           "')");
 
   sql_insert(db, "Users", "(userName,userPass)", Values);
-  free(user);
-  free(pass);
+  user->userID = get_user_id(db, user);
   free(Values);
 }
 
-void add_account(sqlite3 *db, char *user_name, char *user_pass,
-                 unsigned int account_id) {}
+void add_account(sqlite3 *db, User *user) {
+  char *Values;
+
+  asprintf(&Values, "%s%d%s%s%s%s%s%s%s%s%s%f%s", "('", user->records->user_id,
+           "','", user->records->acc_type, "','", user->records->country, "','",
+           user->records->name, "','", user->records->phone, "',",
+           user->records->balance, ")");
+
+  sql_insert(db, "Records", "(user_id, acc_type, country, name, phone)",
+             Values);
+}
 
 /* This function will search for user and returns its ID */
 int get_user_id(sqlite3 *db, User *user) {
   char *zErrMsg = 0;
   int rc;
   char *sql = NULL;
-  const char *data = "Callback function called";
+  __unused const char *data = "Callback function called";
 
   /* Create SQL statement */
   asprintf(&sql, "%s%s%s%s%s",
@@ -114,8 +123,8 @@ char *get_user_pass(sqlite3 *db, User *user) {
   char *zErrMsg = 0;
   int rc;
   char *sql = NULL;
-  char *oper = "INSERT INTO ";
-  const char *data = "Callback function called";
+  __unused char *oper = "INSERT INTO ";
+  __unused const char *data = "Callback function called";
 
   /* Create SQL statement */
   asprintf(&sql, "%s%s%s%s%s",

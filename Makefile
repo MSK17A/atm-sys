@@ -1,6 +1,7 @@
 SRCDIR = src
 OBJDIR = obj
 LDFLAGS = -l sqlite3
+CFLAGS = -Wall -Wextra -Werror
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) # All Source files in /src directory
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(OBJDIR)/%.o,$(SOURCES)) # Replace files names ends in .c inside /src to end in .o
@@ -8,7 +9,7 @@ EXECUTABLE = main
 
 # Compile sources to objects
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	cc -I headers -c $< -o $@
+	cc $(CFLAGS) -I headers -c $< -o $@
 
 # Compile main.c
 $(EXECUTABLE): $(OBJECTS) main.c

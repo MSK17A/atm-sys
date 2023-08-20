@@ -1,3 +1,4 @@
+#include "../headers/addAccountMenu.h"
 #include "../headers/user_struct.h"
 #include "sqlite/sqlite3.h"
 #include <stdio.h>
@@ -26,6 +27,7 @@ void mainMenu(sqlite3 *db, User *user) {
   case 2:
     // student TODO : add your **Update account information** function
     // here
+    addAccountMenu(db, user);
     break;
   case 3:
     // student TODO : add your **Check the details of existing accounts**
