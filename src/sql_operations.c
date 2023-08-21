@@ -78,17 +78,18 @@ void add_user(sqlite3 *db, User *user) {
 }
 
 void add_account(__unused sqlite3 *db, User *user) {
-  __unused char *Values;
+  char *Values;
   /*printf("Acc name:  %s Balance: %lf\n", user->records->name,
          user->records->balance);*/
-
+  printf("1");
   asprintf(&Values, "%s%d%s%s%s%s%s%s%s%s%s%lf%s", "(", user->records->user_id,
            ",'", user->records->acc_type, "','", user->records->country, "','",
            user->records->name, "','", user->records->phone, "',",
            user->records->balance, ")");
-
+  printf("2");
   sql_insert(db, "Records", "(user_id,acc_type,country,name,phone,balance)",
              Values);
+  printf("3");
   free(Values);
 }
 

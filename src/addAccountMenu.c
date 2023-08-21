@@ -8,7 +8,7 @@
 void addAccountMenu(__unused sqlite3 *db, User *user) {
   char Name[30];
   char Account_type[7];
-  char Country[3];
+  char Country[4];
   char Phone[9];
   double Balance;
 
