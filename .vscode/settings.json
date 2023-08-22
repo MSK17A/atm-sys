@@ -1,7 +1,0 @@
-{
-    "C_Cpp.default.compilerPath": "${default}",
-    "C_Cpp.default.includePath": [
-        "&{workspaceFolder}/**",
-        "../headers"
-    ]
-}
