@@ -1,6 +1,6 @@
 SRCDIR = src
 OBJDIR = obj
-LDFLAGS = -l sqlite3
+LDFLAGS = -l sqlite3 -lncurses
 CFLAGS = -Wall -Wextra -Werror
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) # All Source files in /src directory
