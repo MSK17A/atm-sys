@@ -83,9 +83,9 @@ void add_account(__unused sqlite3 *db, User *user) {
          user->records->balance);*/
   asprintf(&Values, "%s%d%s%s%s%s%s%s%s%s%s%lf%s", "(", user->records->user_id,
            ",'", user->records->acc_type, "','", user->records->country, "','",
-           user->records->name, "','", user->records->phone, "',",
+           user->records->acc_num, "','", user->records->phone, "',",
            user->records->balance, ")");
-  sql_insert(db, "Records", "(user_id,acc_type,country,name,phone,balance)",
+  sql_insert(db, "Records", "(user_id,acc_type,country,acc_num,phone,balance)",
              Values);
   free(Values);
 }

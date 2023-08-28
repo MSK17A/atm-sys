@@ -24,9 +24,9 @@ int arr_length(char arr[]) {
 }
 
 /* This will render the add account form window */
-void addAccountMenu(__unused sqlite3 *db, User *user) {
+void addAccountMenu(sqlite3 *db, User *user) {
   int start_menu = 1;
-  char Name[30];
+  char acc_num[30];
   char Account_type[8];
   char Country[4];
   char Phone[10];
@@ -37,8 +37,8 @@ void addAccountMenu(__unused sqlite3 *db, User *user) {
     system("clear");
     printf("\n\n\t\t======= Account Registeration =======\n");
     printf("\n\t\tName :\n");
-    scanf("%s", Name);
-    if (!validate_name(Name)) {
+    scanf("%s", acc_num);
+    if (!validate_name(acc_num)) {
       printf("Name must be less than 30 charachters!\n");
       sleep(2);
       start_menu = 1;
@@ -81,7 +81,7 @@ void addAccountMenu(__unused sqlite3 *db, User *user) {
       continue;
     }
   }
-  char *data[] = {Name, Account_type, Country, Phone};
+  char *data[] = {acc_num, Account_type, Country, Phone};
   selected_record_construction(user, data, Balance);
   add_account(db, user);
 }

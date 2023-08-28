@@ -5,7 +5,7 @@ typedef struct {
   int account_id;
   double balance;
   int user_id;
-  char acc_type[8], country[4], name[30], phone[10];
+  char acc_type[8], country[4], acc_num[30], phone[10], date[11];
 } Record;
 
 typedef struct {
