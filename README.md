@@ -12,3 +12,5 @@ and more.
 3. run `bash build`
 4. run `./main`
 5. Explore
+## Note
+This program will only work on MACOS

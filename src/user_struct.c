@@ -17,7 +17,7 @@ void logged_in_user_construction(User *user, char *User_name, char *Password) {
  */
 void selected_record_construction(User *user, char *data[], double balance) {
 
-  strcpy(user->records->name, data[0]);
+  strcpy(user->records->acc_num, data[0]);
   strcpy(user->records->acc_type, data[1]);
   strcpy(user->records->country, data[2]);
   strcpy(user->records->phone, data[3]);
