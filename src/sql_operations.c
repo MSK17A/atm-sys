@@ -1,4 +1,5 @@
 #include "../headers/sql_operations.h"
+#include "../headers/helper_funcs.h"
 #include "../headers/user_struct.h"
 #include "sqlite/sqlite3.h"
 #include "string.h"
@@ -48,11 +49,12 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
                 char *Values) {
   char *zErrMsg = 0;
   int rc;
-  char *sql = NULL;
+  char sql[200] = "INSERT INTO {table_name} ({columns_names}) VALUES ({values});";
 
   /* Create SQL statement */
-  asprintf(&sql, "%s%s%s%s%s%s%s%s", "INSERT INTO ", Table_name, " ",
-           Columnes_names, " ", "VALUES", Values, ";");
+  string_replace(sql, 200, "{table_name}", Table_name);
+  string_replace(sql, 200, "{columns_names}", Columnes_names);
+  string_replace(sql, 200, "{values}", Values);
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -63,16 +65,16 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   } else {
     fprintf(stdout, "Records created successfully\n");
   }
-  free(sql);
+  // free(sql);
 }
 
 void add_user(sqlite3 *db, User *user) {
   char *Values;
 
-  asprintf(&Values, "%s%s%s%s%s", "('", user->userName, "','", user->userPass,
-           "')");
+  asprintf(&Values, "%s%s%s%s%s", "'", user->userName, "','", user->userPass,
+           "'");
 
-  sql_insert(db, "Users", "(userName,userPass)", Values);
+  sql_insert(db, "Users", "userName,userPass", Values);
   user->userID = get_user_id(db, user);
   free(Values);
 }
