@@ -1,12 +1,12 @@
-#include "../headers/addUserMenu.h"
-#include "../headers/sql_operations.h"
-#include "../headers/user_struct.h"
+#include "addUserMenu.h"
+#include "sql_operations.h"
+#include "user_struct.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../headers/input_validators.h"
+#include "input_validators.h"
 
 /* This will render the add account form window */
 void addAccountMenu(sqlite3 *db, User *user) {

@@ -1,6 +1,6 @@
-#include "../headers/addAccountMenu.h"
-#include "../headers/updateAccountMenu.h"
-#include "../headers/user_struct.h"
+#include "addAccountMenu.h"
+#include "updateAccountMenu.h"
+#include "user_struct.h"
 #include "sqlite/sqlite3.h"
 #include <stdio.h>
 #include <stdlib.h>

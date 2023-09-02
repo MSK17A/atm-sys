@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 /* Replace a substring with a string */
-char *string_replace(char *source, size_t sourceSize, char *substring,
+char *string_replace(char **source, size_t sourceSize, char *substring,
                      char *with);
 
 #endif

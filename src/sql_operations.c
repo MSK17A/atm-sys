@@ -1,8 +1,8 @@
-#include "../headers/sql_operations.h"
-#include "../headers/helper_funcs.h"
-#include "../headers/user_struct.h"
+#include "sql_operations.h"
+#include "helper_funcs.h"
 #include "sqlite/sqlite3.h"
 #include "string.h"
+#include "user_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,12 +49,21 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
                 char *Values) {
   char *zErrMsg = 0;
   int rc;
-  char sql[200] = "INSERT INTO {table_name} ({columns_names}) VALUES ({values});";
+  char *sql = "INSERT INTO {table_name} ({columns_names}) VALUES ({values});";
+
+
+// old = [Hi {name} THERE] // 10
+// NEW = calloc(10 + n)
+// memcpy(new, 3,  old)
+// memcpy(new, n, arg1)
+// memcpy(new, 6, old_mn_wra)
+// new[n] = '\0'
+
 
   /* Create SQL statement */
-  string_replace(sql, 200, "{table_name}", Table_name);
-  string_replace(sql, 200, "{columns_names}", Columnes_names);
-  string_replace(sql, 200, "{values}", Values);
+  string_replace(&sql, 200, "{table_name}", Table_name);
+  string_replace(&sql, 200, "{columns_names}", Columnes_names);
+  string_replace(&sql, 200, "{values}", Values);
 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
