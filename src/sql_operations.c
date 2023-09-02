@@ -74,17 +74,6 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   // free(sql);
 }
 
-void add_user(sqlite3 *db, User *user) {
-  char *Values;
-
-  asprintf(&Values, "%s%s%s%s%s", "'", user->userName, "','", user->userPass,
-           "'");
-
-  sql_insert(db, "Users", "userName,userPass", Values);
-  user->userID = get_user_id(db, user);
-  free(Values);
-}
-
 void add_account(__unused sqlite3 *db, User *user) {
   char *Values;
   /*printf("Acc name:  %s Balance: %lf\n", user->records->name,
