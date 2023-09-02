@@ -1,4 +1,5 @@
 #include <mainMenu.h>
+#include <atm_operations.h>
 #include <sql_operations.h>
 #include <sqlite3.h>
 #include <stdio.h>

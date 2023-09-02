@@ -24,7 +24,7 @@ typedef struct {
 
 /* This callback is used to retrive the data from the database and store them
  * inside a struct */
-static int get_id_callback(void *data, __unused int argc, char **argv,
+__unused static int get_id_callback(void *data, __unused int argc, char **argv,
                            __unused char **azColName) {
   FoundUser *user = (FoundUser *)data;
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
@@ -85,36 +85,6 @@ void add_account(__unused sqlite3 *db, User *user) {
   sql_insert(db, "Records", "(user_id,acc_type,country,acc_num,phone,balance)",
              Values);
   free(Values);
-}
-
-/* This function will search for user and returns its ID */
-int get_user_id(sqlite3 *db, User *user) {
-  char *zErrMsg = 0;
-  int rc;
-  char *sql = NULL;
-  __unused const char *data = "Callback function called";
-
-  /* Create SQL statement */
-  asprintf(&sql, "%s%s%s%s%s",
-           "SELECT user_id FROM Users WHERE userName = ", "'", user->userName,
-           "'", ";");
-
-  /* Execute SQL statement */
-  FoundUser fUser;    // Found user struct
-  fUser.user_id = -1; // Init value for user_id
-  rc = sqlite3_exec(db, sql, get_id_callback, &fUser, &zErrMsg);
-
-  if (rc != SQLITE_OK) {
-    fprintf(stderr, "SQL error: %s\n", zErrMsg);
-    sqlite3_free(zErrMsg);
-  }
-
-  /* If user wasn't found */
-  if (fUser.user_id == -1) {
-    fprintf(stdout, "User not found!\n");
-    return -1;
-  }
-  return fUser.user_id;
 }
 
 /* Returns user pass */
