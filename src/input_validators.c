@@ -1,5 +1,5 @@
 /* Input validators */
-#include "../headers/input_validators.h"
+#include <input_validators.h>
 #include <ctype.h>
 #include <string.h>
 

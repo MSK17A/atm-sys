@@ -1,11 +1,10 @@
-#include "sql_operations.h"
-#include "helper_funcs.h"
-#include "sqlite/sqlite3.h"
-#include "string.h"
-#include "user_struct.h"
+#include <helper_funcs.h>
+#include <sql_operations.h>
+#include <sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <user_struct.h>
 
 static int callback(__unused void *NotUsed, int argc, char **argv,
                     char **azColName) {
@@ -51,14 +50,12 @@ void sql_insert(sqlite3 *db, char *Table_name, char *Columnes_names,
   int rc;
   char *sql = "INSERT INTO {table_name} ({columns_names}) VALUES ({values});";
 
-
-// old = [Hi {name} THERE] // 10
-// NEW = calloc(10 + n)
-// memcpy(new, 3,  old)
-// memcpy(new, n, arg1)
-// memcpy(new, 6, old_mn_wra)
-// new[n] = '\0'
-
+  // old = [Hi {name} THERE] // 10
+  // NEW = calloc(10 + n)
+  // memcpy(new, 3,  old)
+  // memcpy(new, n, arg1)
+  // memcpy(new, 6, old_mn_wra)
+  // new[n] = '\0'
 
   /* Create SQL statement */
   string_replace(&sql, 200, "{table_name}", Table_name);

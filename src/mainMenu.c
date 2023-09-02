@@ -1,10 +1,10 @@
-#include "addAccountMenu.h"
-#include "updateAccountMenu.h"
-#include "user_struct.h"
-#include "sqlite/sqlite3.h"
+#include <addAccountMenu.h>
+#include <sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <updateAccountMenu.h>
+#include <user_struct.h>
 
 void mainMenu(sqlite3 *db, User *user) {
   int option;

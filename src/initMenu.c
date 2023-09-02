@@ -1,11 +1,11 @@
-#include "../headers/addUserMenu.h"
-#include "../headers/loginMenu.h"
-#include "../headers/mainMenu.h"
-#include "../headers/sql_operations.h"
-#include "../headers/user_struct.h"
+#include <addUserMenu.h>
+#include <loginMenu.h>
+#include <mainMenu.h>
+#include <sql_operations.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <user_struct.h>
 
 void initMenu_Instructions_Print();
 

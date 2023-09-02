@@ -1,10 +1,10 @@
-#include "../headers/mainMenu.h"
-#include "../headers/sql_operations.h"
-#include "../headers/user_struct.h"
-#include "sqlite/sqlite3.h"
+#include <mainMenu.h>
+#include <sql_operations.h>
+#include <sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <user_struct.h>
 
 /* Returns 1 when user logged in successfully, or 0 when use enters wrong
  * credentials */

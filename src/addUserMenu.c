@@ -1,9 +1,9 @@
-#include "../headers/addUserMenu.h"
-#include "../headers/sql_operations.h"
-#include "../headers/user_struct.h"
+#include <addUserMenu.h>
+#include <sql_operations.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <user_struct.h>
 
 void addUserMenu(sqlite3 *db, User *user) {
   char user_input[30];

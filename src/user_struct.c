@@ -1,5 +1,5 @@
-#include "../headers/user_struct.h"
-#include "../headers/sql_operations.h"
+#include <user_struct.h>
+#include <sql_operations.h>
 #include <stdio.h>
 #include <string.h>
 
