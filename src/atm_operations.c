@@ -42,7 +42,7 @@ int add_user(sqlite3 *db, User *user) {
 
 int get_user_id(sqlite3 *db, User *user) {
   int rc;
-  int id;
+  int id = -1;
   // Define the SQL SELECT statement with a WHERE clause
   const char *selectSQL = "SELECT user_id FROM Users WHERE userName = ?";
 
@@ -72,6 +72,5 @@ int get_user_id(sqlite3 *db, User *user) {
 
   // Finalize and close the statement
   sqlite3_finalize(stmt);
-  printf("user ID: %d", id);
   return id;
 }

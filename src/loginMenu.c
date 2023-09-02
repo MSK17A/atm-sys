@@ -1,5 +1,5 @@
-#include <mainMenu.h>
 #include <atm_operations.h>
+#include <mainMenu.h>
 #include <sql_operations.h>
 #include <sqlite3.h>
 #include <stdio.h>
@@ -26,8 +26,10 @@ int loginMenu(sqlite3 *db, User *user) {
   const char *userPassword = get_user_pass(db, user);
 
   /* Check if the id is found or exit the program if it wasn't found */
-  if (get_user_id(db, user) == -1)
+  if (get_user_id(db, user) == -1) {
+    printf("User not found!");
     exit(1);
+  }
 
   /* Compares the password in the database with the provided password, if it is
    * match then enter the mainMenu as a user */
