@@ -30,10 +30,12 @@ void mainMenu(sqlite3 *db, User *user) {
       // createNewAcc(u);
       addAccountMenu(db, user);
       return_to_menu = 1;
+      break;
     case 2:
       // student TODO : add your **Update account information** function
       // here
       updateAccountMenu(db, user);
+      return_to_menu = 1;
       break;
     case 3:
       // student TODO : add your **Check the details of existing accounts**

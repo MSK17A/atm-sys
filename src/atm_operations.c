@@ -74,3 +74,43 @@ int get_user_id(sqlite3 *db, User *user) {
   sqlite3_finalize(stmt);
   return id;
 }
+
+int add_account(__unused sqlite3 *db, User *user) {
+  int rc;
+  // Define the SQL INSERT statement with specific columns
+  const char *insertSQL =
+      "INSERT INTO Records (user_id,acc_type,country,acc_num,phone,balance) "
+      "VALUES (?, ?, ?, ?, ?, ?)";
+
+  // Prepare the SQL statement
+  sqlite3_stmt *stmt;
+  rc = sqlite3_prepare_v2(db, insertSQL, -1, &stmt, 0);
+
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return (0);
+  }
+
+  // Bind values to the parameters in the prepared statement
+  rc = sqlite3_bind_int(stmt, 1, user->records->user_id);
+  rc = sqlite3_bind_text(stmt, 2, user->records->acc_type, -1, SQLITE_STATIC);
+  rc = sqlite3_bind_text(stmt, 3, user->records->country, -1, SQLITE_STATIC);
+  rc = sqlite3_bind_text(stmt, 4, user->records->acc_num, -1, SQLITE_STATIC);
+  rc = sqlite3_bind_text(stmt, 5, user->records->phone, -1, SQLITE_STATIC);
+  rc = sqlite3_bind_double(stmt, 6, user->records->balance);
+
+  // Execute the SQL statement
+  rc = sqlite3_step(stmt);
+
+  if (rc != SQLITE_DONE) {
+    fprintf(stderr, "Insert failed: %s\n", sqlite3_errmsg(db));
+  } else {
+    fprintf(stdout, "Data inserted successfully\n");
+  }
+
+  // Finalize and close the statement
+  sqlite3_finalize(stmt);
+
+  return 0;
+}
