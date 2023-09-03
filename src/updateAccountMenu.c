@@ -1,6 +1,6 @@
+#include <atm_operations.h>
 #include <ctype.h>
 #include <input_validators.h>
-#include <sql_operations.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -23,11 +23,15 @@ void updateAccountMenu(__unused sqlite3 *db, __unused User *user) {
     printf("\n\n\t\t======= Update Account Information =======\n");
     printf("\n\t\tAccount number :\n");
     scanf("%s", acc_num);
-    if (!validate_name(acc_num)) {
+    if (!validate_account_number(acc_num)) {
       printf("Account number must be less than 30 charachters!\n");
       sleep(2);
       start_menu = 1;
       continue;
     }
+
+    strcpy(user->records->phone, "3322");
+    strcpy(user->records->country, "buu");
+    update_account(db, user, atoi(acc_num));
   }
 }

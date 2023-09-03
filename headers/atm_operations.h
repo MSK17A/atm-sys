@@ -7,4 +7,5 @@
 int add_user(sqlite3 *db, User *user);
 int get_user_id(sqlite3 *db, User *user);
 int add_account(sqlite3 *db, User *user);
+int update_account(sqlite3 *db, User *user, int account_number);
 #endif

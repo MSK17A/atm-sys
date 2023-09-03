@@ -23,7 +23,7 @@ void addAccountMenu(sqlite3 *db, User *user) {
     printf("\n\n\t\t======= Account Registeration =======\n");
     printf("\n\t\tName :\n");
     scanf("%s", acc_num);
-    if (!validate_name(acc_num)) {
+    if (!validate_account_number(acc_num)) {
       printf("Name must be less than 30 charachters!\n");
       sleep(2);
       start_menu = 1;

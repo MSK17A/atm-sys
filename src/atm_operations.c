@@ -114,3 +114,39 @@ int add_account(__unused sqlite3 *db, User *user) {
 
   return 0;
 }
+
+int update_account(sqlite3 *db, User *user, int account_number) {
+  int rc;
+  // Define the SQL INSERT statement with specific columns
+  // need to verify user_id first before updating anything
+  const char *updateSQL = "UPDATE Records SET phone = ?, country = ? WHERE "
+                          "acc_num = ? AND user_id = ?";
+  // Prepare the SQL statement
+  sqlite3_stmt *stmt;
+  rc = sqlite3_prepare_v2(db, updateSQL, -1, &stmt, 0);
+
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return (0);
+  }
+
+  // Bind values to the parameters in the prepared statement
+  rc = sqlite3_bind_text(stmt, 1, user->records->phone, -1, SQLITE_STATIC);
+  rc = sqlite3_bind_text(stmt, 2, user->records->country, -1, SQLITE_STATIC);
+  rc = sqlite3_bind_int(stmt, 3, account_number);
+  rc = sqlite3_bind_int(stmt, 4, user->records->user_id);
+  // Execute the SQL statement
+  rc = sqlite3_step(stmt);
+
+  if (rc != SQLITE_DONE) {
+    fprintf(stderr, "Insert failed: %s\n", sqlite3_errmsg(db));
+  } else {
+    fprintf(stdout, "Data inserted successfully\n");
+  }
+
+  // Finalize and close the statement
+  sqlite3_finalize(stmt);
+
+  return 0;
+}

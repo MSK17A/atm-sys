@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 
-int validate_name(char *name) {
+int validate_account_number(char *name) {
   if (strlen(name) >= 30) {
     return 0;
   } else {
