@@ -12,10 +12,9 @@
 void updateAccountMenu(__unused sqlite3 *db, __unused User *user) {
   int start_menu = 1;
   char acc_num[30];
-  __unused char Account_type[8];
   __unused char Country[4];
   __unused char Phone[10];
-  __unused double Balance;
+
   while (start_menu) {
     start_menu = 0;
 
@@ -30,8 +29,15 @@ void updateAccountMenu(__unused sqlite3 *db, __unused User *user) {
       continue;
     }
 
-    strcpy(user->records->phone, "3322");
-    strcpy(user->records->country, "buu");
+    printf("\n\t\tPhone :\n");
+    scanf("%s", Phone);
+
+    printf("\n\t\tCountry :\n");
+    scanf("%s", Country);
+
+    /* Update phone and country in the user records buffer */
+    strcpy(user->records->phone, Phone);
+    strcpy(user->records->country, Country);
     update_account(db, user, atoi(acc_num));
   }
 }
