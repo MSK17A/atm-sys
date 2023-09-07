@@ -5,6 +5,7 @@
 #include <string.h>
 #include <updateAccountMenu.h>
 #include <user_struct.h>
+#include <listaccounts.h>
 
 void mainMenu(sqlite3 *db, User *user) {
   int option;
@@ -43,6 +44,7 @@ void mainMenu(sqlite3 *db, User *user) {
       break;
     case 4:
       // checkAllAccounts(u);
+      listaccounts(db, user);
       break;
     case 5:
       // student TODO : add your **Make transaction** function

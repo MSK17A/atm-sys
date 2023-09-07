@@ -2,5 +2,5 @@
 .cache
 compile_commands.json
 .vscode/
+*obj
 *.dSYM
-*.obj

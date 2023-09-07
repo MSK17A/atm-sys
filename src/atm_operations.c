@@ -150,3 +150,43 @@ int update_account(sqlite3 *db, User *user, int account_number) {
 
   return 0;
 }
+
+char **get_accounts_ids(sqlite3 *db, __unused User *user) {
+  int rc;
+  char **ids = malloc(1);
+  // Define the SQL SELECT statement with a WHERE clause
+  const char *selectSQL = "SELECT acc_num FROM Records WHERE user_id = ?";
+
+  // Prepare the SQL statement
+  sqlite3_stmt *stmt;
+  rc = sqlite3_prepare_v2(db, selectSQL, -1, &stmt, 0);
+
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return (0);
+  }
+
+  // Bind a value to the parameter in the prepared statement
+  rc = sqlite3_bind_int(stmt, 1, 1);
+
+  // Execute the SQL statement and fetch results
+  int count = 0;
+  while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+    asprintf(&ids[count], "%s", sqlite3_column_text(stmt, 0));
+    count++;
+  }
+  /*
+  // Add NULL after the end of the array to indicate end of array
+  asprintf(&ids[count], "%s", "NULL");
+  */
+  if (rc != SQLITE_DONE) {
+    fprintf(stderr, "Select failed: %s\n", sqlite3_errmsg(db));
+    sqlite3_finalize(stmt);
+    return NULL;
+  }
+
+  // Finalize and close the statement
+  sqlite3_finalize(stmt);
+  return ids;
+}
