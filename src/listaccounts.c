@@ -20,7 +20,7 @@ void listaccounts(sqlite3 *db, User *user) {
     printf("\n\n\t\t======= Update Account Information =======\n");
     printf("\n\t\tAccounts ids :\n");
 
-    for (int i = 0; i < (int)(sizeof(ids) / sizeof(int)); i++) {
+    for (int i = 0; strcmp(ids[i], "NULL") != 0; i++) {
       printf("%s\n", ids[i]);
     }
     stdin_flush();
@@ -28,4 +28,5 @@ void listaccounts(sqlite3 *db, User *user) {
     while (getchar() != '\n') {
     }
   }
+  free(ids);
 }

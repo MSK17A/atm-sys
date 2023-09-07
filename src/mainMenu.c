@@ -45,6 +45,7 @@ void mainMenu(sqlite3 *db, User *user) {
     case 4:
       // checkAllAccounts(u);
       listaccounts(db, user);
+      return_to_menu = 1;
       break;
     case 5:
       // student TODO : add your **Make transaction** function
