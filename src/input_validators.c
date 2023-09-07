@@ -21,7 +21,7 @@ int validate_Account_type(char *acc_type) {
 }
 int validate_Country(char *Country) {
   int in_size = arr_length(Country);
-  if (in_size > 4) {
+  if (in_size > 3) {
     return 0;
   }
   for (int i = 0; i < in_size; i++) {

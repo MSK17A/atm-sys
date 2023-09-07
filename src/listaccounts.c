@@ -1,5 +1,6 @@
 #include <atm_operations.h>
 #include <ctype.h>
+#include <helper_funcs.h>
 #include <input_validators.h>
 #include <listaccounts.h>
 #include <stdio.h>
@@ -21,6 +22,10 @@ void listaccounts(sqlite3 *db, User *user) {
 
     for (int i = 0; i < (int)(sizeof(ids) / sizeof(int)); i++) {
       printf("%s\n", ids[i]);
+    }
+    stdin_flush();
+    printf("Press ENTER to continue...");
+    while (getchar() != '\n') {
     }
   }
 }

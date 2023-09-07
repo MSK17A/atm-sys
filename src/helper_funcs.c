@@ -27,3 +27,10 @@ char *string_replace(char **source, size_t sourceSize, char *substring,
   *source = buffer;
   return substring_source;
 }
+
+void stdin_flush() {
+  int c;
+  while ((c = getchar()) != '\n' && c != EOF) {
+    // Do nothing; just read and discard characters
+  }
+}
