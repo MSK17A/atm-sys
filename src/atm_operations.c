@@ -2,6 +2,7 @@
 #include <sql_operations.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int add_user(sqlite3 *db, User *user) {
   int rc;
@@ -194,7 +195,7 @@ char **get_accounts_ids(sqlite3 *db, User *user) {
 User_Account *get_accounts_list(sqlite3 *db, User *user) {
   int rc;
   /* Variables to be encapsulated */
-  User_Account *user_accounts = malloc(sizeof(User_Account));
+  User_Account *user_accounts = (User_Account *)calloc(1, sizeof(User_Account));
 
   // Define the SQL SELECT statement with a WHERE clause
   const char *selectSQL = "SELECT * FROM Records WHERE user_id = ?";
@@ -215,16 +216,24 @@ User_Account *get_accounts_list(sqlite3 *db, User *user) {
   // Execute the SQL statement and fetch results
   int count = 0;
   while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-    user_accounts = realloc(user_accounts, sizeof(User_Account));
-    asprintf(&user_accounts[count].account_number, "%s",
-             sqlite3_column_text(stmt, 5));
+    user_accounts = realloc(user_accounts, (count + 1) * sizeof(User_Account));
+    /* NO NEED TO ALLOCATE MEMORY FOR strdup(), it also causes an error for
+     * while ((rc = sqlite3_step(stmt)) == SQLITE_ROW), I don't know why? */
+    /*
+    user_accounts[count].account_number = (char *)calloc(1, sizeof(char) *
+    20); user_accounts[count].type_of_account = (char *)calloc(1, sizeof(char) *
+    20);
+    */
+    user_accounts[count].account_number =
+        strdup((char *)sqlite3_column_text(stmt, 5));
 
+    user_accounts[count].type_of_account =
+        strdup((char *)sqlite3_column_text(stmt, 3));
     count++;
   }
-
+  user_accounts = realloc(user_accounts, (count + 1) * sizeof(User_Account));
+  user_accounts[count].account_number = strdup("NULL");
   // Add NULL after the end of the array to indicate end of array
-  user_accounts = realloc(user_accounts, sizeof(User_Account));
-  asprintf(&user_accounts[count].account_number, "%s", "NULL");
 
   if (rc != SQLITE_DONE) {
     fprintf(stderr, "Select failed: %s\n", sqlite3_errmsg(db));
