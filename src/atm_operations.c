@@ -190,3 +190,49 @@ char **get_accounts_ids(sqlite3 *db, User *user) {
   sqlite3_finalize(stmt);
   return ids;
 }
+
+User_Account *get_accounts_list(sqlite3 *db, User *user) {
+  int rc;
+  /* Variables to be encapsulated */
+  User_Account *user_accounts = malloc(sizeof(User_Account));
+
+  // Define the SQL SELECT statement with a WHERE clause
+  const char *selectSQL = "SELECT * FROM Records WHERE user_id = ?";
+
+  // Prepare the SQL statement
+  sqlite3_stmt *stmt;
+  rc = sqlite3_prepare_v2(db, selectSQL, -1, &stmt, 0);
+
+  if (rc != SQLITE_OK) {
+    fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return (0);
+  }
+
+  // Bind a value to the parameter in the prepared statement
+  rc = sqlite3_bind_int(stmt, 1, user->userID);
+
+  // Execute the SQL statement and fetch results
+  int count = 0;
+  while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+    user_accounts = realloc(user_accounts, sizeof(User_Account));
+    asprintf(&user_accounts[count].account_number, "%s",
+             sqlite3_column_text(stmt, 5));
+
+    count++;
+  }
+
+  // Add NULL after the end of the array to indicate end of array
+  user_accounts = realloc(user_accounts, sizeof(User_Account));
+  asprintf(&user_accounts[count].account_number, "%s", "NULL");
+
+  if (rc != SQLITE_DONE) {
+    fprintf(stderr, "Select failed: %s\n", sqlite3_errmsg(db));
+    sqlite3_finalize(stmt);
+    return NULL;
+  }
+
+  // Finalize and close the statement
+  sqlite3_finalize(stmt);
+  return user_accounts;
+}

@@ -9,5 +9,6 @@ int get_user_id(sqlite3 *db, User *user);
 int add_account(sqlite3 *db, User *user);
 int update_account(sqlite3 *db, User *user, int account_number);
 char **get_accounts_ids(sqlite3 *db, User *user);
+User_Account *get_accounts_list(sqlite3 *db, User *user);
 
 #endif

@@ -17,4 +17,9 @@ typedef struct {
 void logged_in_user_construction(User *user, char *User_name, char *Password);
 void selected_record_construction(User *user, char *data[], double balance);
 
+typedef struct {
+  char *account_number, country[4], phone_number[10], *type_of_account;
+  double balance;
+} User_Account;
+
 #endif
