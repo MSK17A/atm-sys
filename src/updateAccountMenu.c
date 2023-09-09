@@ -1,5 +1,6 @@
 #include <atm_operations.h>
 #include <ctype.h>
+#include <helper_funcs.h>
 #include <input_validators.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,5 +40,10 @@ void updateAccountMenu(__unused sqlite3 *db, __unused User *user) {
     strcpy(user->records->phone, Phone);
     strcpy(user->records->country, Country);
     update_account(db, user, atoi(acc_num));
+  }
+
+  stdin_flush();
+  printf("Press ENTER to continue...");
+  while (getchar() != '\n') {
   }
 }

@@ -30,6 +30,7 @@ int loginMenu(sqlite3 *db, User *user) {
     printf("User not found!");
     exit(1);
   }
+  user->userID = get_user_id(db, user);
 
   /* Compares the password in the database with the provided password, if it is
    * match then enter the mainMenu as a user */
