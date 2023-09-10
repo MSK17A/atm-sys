@@ -42,8 +42,5 @@ void updateAccountMenu(__unused sqlite3 *db, __unused User *user) {
     update_account(db, user, atoi(acc_num));
   }
 
-  stdin_flush();
-  printf("Press ENTER to continue...");
-  while (getchar() != '\n') {
-  }
+  pressEnterToContinue();
 }

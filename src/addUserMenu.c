@@ -1,5 +1,6 @@
 #include <addUserMenu.h>
 #include <atm_operations.h>
+#include <helper_funcs.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,6 +20,8 @@ void addUserMenu(sqlite3 *db, User *user) {
   strcpy(user->userPass, user_input);
 
   add_user(db, user);
+  logged_in_user_construction(user, user->userName, user->userPass);
+  pressEnterToContinue();
   /*printf("%s%s%s%s", "username: ", user->userName,
          " password: ", user->userPass);*/
 }

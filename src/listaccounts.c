@@ -30,10 +30,7 @@ void listaccounts(sqlite3 *db, User *user) {
       free(user_accounts[i].type_of_account);
     }
 
-    stdin_flush();
-    printf("Press ENTER to continue...");
-    while (getchar() != '\n') {
-    }
+    pressEnterToContinue();
   }
 
   free(user_accounts);

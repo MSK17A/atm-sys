@@ -26,10 +26,7 @@ void addAccountMenu(sqlite3 *db, User *user) {
     scanf("%s", acc_num);
     if (!validate_account_number(acc_num)) {
       printf("Name must be less than 30 charachters!\n");
-      stdin_flush();
-      printf("Press ENTER to continue...");
-      while (getchar() != '\n')
-        ;
+      pressEnterToContinue();
       start_menu = 1;
       continue;
     }
@@ -38,10 +35,7 @@ void addAccountMenu(sqlite3 *db, User *user) {
     scanf("%s", Account_type);
     if (!validate_Account_type(Account_type)) {
       printf("select either (savings, fixed)\n");
-      stdin_flush();
-      printf("Press ENTER to continue...");
-      while (getchar() != '\n')
-        ;
+      pressEnterToContinue();
       start_menu = 1;
       continue;
     }
@@ -50,10 +44,7 @@ void addAccountMenu(sqlite3 *db, User *user) {
     scanf("%s", Country);
     if (!validate_Country(Country)) {
       printf("Write 3 letters country code\n");
-      stdin_flush();
-      printf("Press ENTER to continue...");
-      while (getchar() != '\n')
-        ;
+      pressEnterToContinue();
       start_menu = 1;
       continue;
     }
@@ -62,10 +53,7 @@ void addAccountMenu(sqlite3 *db, User *user) {
     scanf("%s", Phone);
     if (!validate_Phone(Phone)) {
       printf("invalid phone number\n");
-      stdin_flush();
-      printf("Press ENTER to continue...");
-      while (getchar() != '\n')
-        ;
+      pressEnterToContinue();
       start_menu = 1;
       continue;
     }
@@ -73,10 +61,7 @@ void addAccountMenu(sqlite3 *db, User *user) {
     printf("\n\t\tBalance: \n");
     scanf("%lf", &Balance);
     if (!validate_Balance(Balance)) {
-      stdin_flush();
-      printf("Press ENTER to continue...");
-      while (getchar() != '\n')
-        ;
+      pressEnterToContinue();
       start_menu = 1;
       continue;
     }

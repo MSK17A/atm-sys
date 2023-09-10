@@ -34,3 +34,10 @@ void stdin_flush() {
     // Do nothing; just read and discard characters
   }
 }
+
+void pressEnterToContinue() {
+  stdin_flush();
+  printf("Press ENTER to continue...");
+  while (getchar() != '\n') {
+  }
+}
