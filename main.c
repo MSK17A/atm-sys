@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <user_struct.h>
 
-int main(int argc, char *argv[]) {
+int main() {
   sqlite3 *db;
   char *zErrMsg = 0;
   int rc;

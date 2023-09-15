@@ -1,6 +1,6 @@
 SRCDIR = src
 OBJDIR = obj
-LDFLAGS = -l sqlite3 -lncurses
+LDFLAGS = -lsqlite3 -lncurses
 CFLAGS = -Wall -Wextra -Werror
 
 SOURCES = $(wildcard $(SRCDIR)/*.c) # All Source files in /src directory
@@ -9,7 +9,7 @@ EXECUTABLE = main.out
 
 # Compile sources to objects
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	cc -g $(CFLAGS) -I headers -c -g $< -o $@
+	cc -lc -g $(CFLAGS) -I headers -c -g $< -o $@
 
 # Compile main.c
 $(EXECUTABLE): $(OBJECTS) main.c

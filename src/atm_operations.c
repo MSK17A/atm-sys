@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <atm_operations.h>
 #include <sql_operations.h>
 #include <stdio.h>
@@ -76,7 +78,7 @@ int get_user_id(sqlite3 *db, User *user) {
   return id;
 }
 
-int add_account(__unused sqlite3 *db, User *user) {
+int add_account([[maybe_unused]] sqlite3 *db, User *user) {
   int rc;
   // Define the SQL INSERT statement with specific columns
   const char *insertSQL =

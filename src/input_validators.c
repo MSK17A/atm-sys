@@ -31,8 +31,8 @@ int validate_Country(char *Country) {
   }
   return 1;
 }
-int validate_Phone(char __unused *Phone) { return 1; }
-int validate_Balance(double __unused Balance) { return 1; }
+int validate_Phone([[maybe_unused]] char *Phone) { return 1; }
+int validate_Balance([[maybe_unused]] double Balance) { return 1; }
 
 int arr_length(char arr[]) {
   int i;

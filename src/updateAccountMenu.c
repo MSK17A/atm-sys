@@ -10,11 +10,11 @@
 #include <user_struct.h>
 
 /* This will render the add account form window */
-void updateAccountMenu(__unused sqlite3 *db, __unused User *user) {
+void updateAccountMenu([[maybe_unused]] sqlite3 *db, [[maybe_unused]] User *user) {
   int start_menu = 1;
   char acc_num[30];
-  __unused char Country[4];
-  __unused char Phone[10];
+  [[maybe_unused]] char Country[4];
+  [[maybe_unused]] char Phone[10];
 
   while (start_menu) {
     start_menu = 0;

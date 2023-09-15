@@ -1,12 +1,13 @@
+#define _GNU_SOURCE
 #include <helper_funcs.h>
 #include <sql_operations.h>
-#include <sqlite3.h>
+#include <sqlite/sqlite3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <user_struct.h>
 
-static int callback(__unused void *NotUsed, int argc, char **argv,
+static int callback([[maybe_unused]] void *NotUsed, int argc, char **argv,
                     char **azColName) {
   int i;
   for (i = 0; i < argc; i++) {
@@ -24,8 +25,8 @@ typedef struct {
 
 /* This callback is used to retrive the data from the database and store them
  * inside a struct */
-__unused static int get_id_callback(void *data, __unused int argc, char **argv,
-                           __unused char **azColName) {
+[[maybe_unused]] static int get_id_callback(void *data, [[maybe_unused]] int argc, char **argv,
+                           [[maybe_unused]] char **azColName) {
   FoundUser *user = (FoundUser *)data;
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   user->user_id = atoi(argv[0]);
@@ -34,8 +35,8 @@ __unused static int get_id_callback(void *data, __unused int argc, char **argv,
   return 0;
 }
 
-static int get_pass_callback(void *data, __unused int argc, char **argv,
-                             __unused char **azColName) {
+static int get_pass_callback(void *data, [[maybe_unused]] int argc, char **argv,
+                             [[maybe_unused]] char **azColName) {
   FoundUser *user = (FoundUser *)data;
   // printf("argc: %d, argv: %s, %s", argc, argv[0], "\n");
   asprintf(&user->userPass, "%s", argv[0]);
@@ -79,8 +80,8 @@ char *get_user_pass(sqlite3 *db, User *user) {
   char *zErrMsg = 0;
   int rc;
   char *sql = NULL;
-  __unused char *oper = "INSERT INTO ";
-  __unused const char *data = "Callback function called";
+  [[maybe_unused]] char *oper = "INSERT INTO ";
+  [[maybe_unused]] const char *data = "Callback function called";
 
   /* Create SQL statement */
   asprintf(&sql, "%s%s%s%s%s",
